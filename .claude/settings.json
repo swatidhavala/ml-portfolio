@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(.venv/bin/pip install:*)",
+      "Bash(brew install:*)",
+      "Read(//opt/homebrew/Cellar/libomp/22.1.3/lib/**)"
+    ]
+  }
+}
