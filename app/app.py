@@ -7,16 +7,28 @@ import os
 
 st.set_page_config(page_title="Olist ML Dashboard", layout="wide")
 st.title("🛒 Olist E-Commerce — ML Predictions")
-st.markdown("Predict **order value** and **late delivery risk** from order features.")
+
+# ── Debug: show exact paths so we can see what's available ──
+st.write("📁 Current working directory:", os.getcwd())
+st.write("📂 Files available:", os.listdir('.'))
+if os.path.exists('models'):
+    st.write("📦 Models folder contents:", os.listdir('models'))
+else:
+    st.write("❌ models/ folder NOT found")
 
 @st.cache_resource
 def load_models():
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    reg = joblib.load(os.path.join(BASE_DIR, 'models', 'best_regressor.pkl'))
-    clf = joblib.load(os.path.join(BASE_DIR, 'models', 'best_classifier.pkl'))
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    reg_path = os.path.join(base, 'models', 'best_regressor.pkl')
+    clf_path = os.path.join(base, 'models', 'best_classifier.pkl')
+    st.write("🔍 Looking for regressor at:", reg_path)
+    st.write("🔍 Looking for classifier at:", clf_path)
+    reg = joblib.load(reg_path)
+    clf = joblib.load(clf_path)
     return reg, clf
 
 reg_model, clf_model = load_models()
+st.success("✅ Models loaded successfully!")
 
 col1, col2 = st.columns(2)
 with col1:
